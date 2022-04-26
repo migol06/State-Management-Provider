@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/model/task.dart';
 
 import '../widgets/widgets.dart';
 
@@ -11,6 +12,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final textFieldController = TextEditingController();
+
+  List<Task> task = [
+    Task(desc: 'Buy Eggs'),
+    Task(desc: 'Buy Drinks'),
+    Task(desc: 'Buy Fruits'),
+  ];
 
   Future getBottomSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -38,7 +45,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   textAlign: TextAlign.center,
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // TaskData().task.add(Task(desc: textFieldController.text));
+                      setState(() {
+                        // taskData.task.add(Task(desc: textFieldController.text));
+                        task.add(Task(desc: textFieldController.text));
+                      });
+
+                      Navigator.pop(context);
+                      textFieldController.clear();
+                    },
                     child: const Text(
                       'Add',
                       style: TextStyle(color: Colors.white),
@@ -70,17 +86,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 const EdgeInsets.only(top: 60, left: 30, right: 30, bottom: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CircleAvatar(
-                  child: Icon(
-                    Icons.list,
-                    size: 30,
-                    color: Colors.lightBlueAccent,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    print(task.length);
+                  },
+                  child: const CircleAvatar(
+                    child: Icon(
+                      Icons.list,
+                      size: 30,
+                      color: Colors.lightBlueAccent,
+                    ),
+                    backgroundColor: Colors.white,
+                    radius: 30,
                   ),
-                  backgroundColor: Colors.white,
-                  radius: 30,
                 ),
-                Text(
+                const Text(
                   'Todoey',
                   style: TextStyle(
                       color: Colors.white,
@@ -88,8 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '12 Tasks',
-                  style: TextStyle(color: Colors.white),
+                  '${task.length} Tasks',
+                  style: const TextStyle(color: Colors.white),
                 ),
               ],
             ),
@@ -97,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: const TileList(),
+              child: TileList(tasks: task),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
