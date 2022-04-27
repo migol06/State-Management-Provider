@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/model/task.dart';
 
 import '../model/task_data.dart';
 import '../widgets/widgets.dart';
@@ -42,11 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      // TaskData().task.add(Task(desc: textFieldController.text));
-                      // setState(() {
-                      //   // taskData.task.add(Task(desc: textFieldController.text));
-                      //   task.add(Task(desc: textFieldController.text));
-                      // });
+                      Provider.of<TaskDataModel>(context, listen: false)
+                          .addTask(textFieldController.text);
 
                       Navigator.pop(context);
                       textFieldController.clear();
@@ -114,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TileList(),
+              child: const TileList(),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(

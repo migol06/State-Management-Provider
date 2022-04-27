@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/model/task.dart';
 import 'package:todoey/model/task_data.dart';
 
 import 'widgets.dart';
@@ -15,12 +14,13 @@ class TileList extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (context, index) {
             return TaskTile(
+                onTap: () {
+                  value.deleteTask(value.task[index]);
+                },
                 desc: value.task[index].desc,
                 isChecked: value.task[index].isChecked!,
                 onChanged: (bool? done) {
-                  // setState(() {
-                  //   widget.tasks![index].toggleDone();
-                  // });
+                  value.updateTask(value.task[index]);
                 });
           },
           itemCount: value.taskLength,
