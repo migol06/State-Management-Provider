@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey/model/task.dart';
 
+import '../model/task_data.dart';
 import '../widgets/widgets.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -12,12 +14,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final textFieldController = TextEditingController();
-
-  List<Task> task = [
-    Task(desc: 'Buy Eggs'),
-    Task(desc: 'Buy Drinks'),
-    Task(desc: 'Buy Fruits'),
-  ];
 
   Future getBottomSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -47,10 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                     onPressed: () {
                       // TaskData().task.add(Task(desc: textFieldController.text));
-                      setState(() {
-                        // taskData.task.add(Task(desc: textFieldController.text));
-                        task.add(Task(desc: textFieldController.text));
-                      });
+                      // setState(() {
+                      //   // taskData.task.add(Task(desc: textFieldController.text));
+                      //   task.add(Task(desc: textFieldController.text));
+                      // });
 
                       Navigator.pop(context);
                       textFieldController.clear();
@@ -89,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print(task.length);
+                    // print(task.length);
                   },
                   child: const CircleAvatar(
                     child: Icon(
@@ -109,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${task.length} Tasks',
+                  '${Provider.of<TaskDataModel>(context).taskLength} Tasks',
                   style: const TextStyle(color: Colors.white),
                 ),
               ],
@@ -118,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TileList(tasks: task),
+              child: TileList(),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(

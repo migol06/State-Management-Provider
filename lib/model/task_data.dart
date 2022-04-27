@@ -11,4 +11,8 @@ class TaskDataModel extends ChangeNotifier {
   void addTask(String data) {
     task.add(Task(desc: data));
   }
+
+  int get taskLength {
+    return task.length;
+  }
 }
